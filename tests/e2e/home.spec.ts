@@ -18,7 +18,7 @@ test('install command is visible', async ({ page }) => {
 test('nav links are present', async ({ page }) => {
   await page.goto('/');
   const header = page.getByRole('banner');
-  await expect(header.getByRole('link', { name: 'Blogs' })).toBeVisible();
+  await expect(header.getByRole('link', { name: 'Blog' })).toBeVisible();
   await expect(header.getByRole('link', { name: 'GitHub' })).toBeVisible();
 });
 
