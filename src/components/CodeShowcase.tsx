@@ -63,21 +63,30 @@ def write_email_with_strategy(m: mellea.MelleaSession, name: str, notes: str) ->
     return email_candidate.sample_generations[0].value`,
   },
   {
-    title: 'MObjects',
+    title: 'Safety & Guardrails',
     description:
-      'Add LLM query capabilities to any existing Python class with a single decorator. No rewrites, no wrappers.',
-    learnMore: 'https://docs.mellea.ai/concepts/mobjects-and-mify',
-    code: `from mellea.stdlib.components.mify import mify
+      'Detect harmful outputs, hallucinations, and jailbreak attempts before they reach your users — using built-in Granite Guardian integration, with no external service required.',
+    learnMore: 'https://docs.mellea.ai/how-to/safety-guardrails',
+    code: `import mellea
+from mellea.stdlib.checks.guardian import GuardianCheck
 
-@mify
-class Customer:
-    def __init__(self, name: str, last_purchase: str) -> None:
-        self.name = name
-        self.last_purchase = last_purchase
+m = mellea.start_session()
 
-customer = Customer("Alice", "noise-cancelling headphones")
-answer = m.query(customer, "What would Alice enjoy as a follow-up gift?")
-print(str(answer))`,
+@generative
+def draft_response(user_message: str) -> str:
+    """Write a helpful customer support response."""
+    ...
+
+response = m.instruct(
+    draft_response,
+    user_message="How do I reset my password?",
+    requirements=[
+        GuardianCheck.no_harmful_content(),
+        GuardianCheck.no_hallucination(),
+    ],
+)
+
+print(response)  # validated — or retried until it passes`,
   },
 ];
 
