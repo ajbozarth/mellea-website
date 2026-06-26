@@ -54,7 +54,15 @@ Each is tagged with a `TEMP(redesign):` comment in the source.
 |------|--------|-----------|
 | `.github/workflows/nextjs.yml` | `push.branches` includes `"redesign"` | `["main"]` |
 | `.github/workflows/nextjs.yml` | `build` step has `NEXT_PUBLIC_BASE_PATH` env block | remove the `env:` block (it is a no-op on main, but should not ship) |
-| `.github/workflows/nextjs.yml` | `deploy` job gate is `github.ref == 'refs/heads/redesign'` | `github.ref == 'refs/heads/main'` |
+| `.github/workflows/nextjs.yml` | `deploy` job `needs: [test-unit, build]` and gate `github.ref == 'refs/heads/redesign'` | restore `needs: [test-unit, test-e2e, link-check]` and the original main-gated `if` (full snippet is in the `TEMP(redesign)` comment above the job) |
+
+> **Why deploy isn't gated on `test-e2e` / `link-check` on this branch:** the
+> preview build uses `basePath=/mellea-website`, but the e2e tests serve `out/`
+> at the server root and assert the *current* site's structure — so they 404 /
+> fail against both the basePath and the upcoming wholesale rewrite. `link-check`
+> also flags the preview URL until the first deploy publishes it. Both jobs still
+> **run and report status on the PR**; they just don't block the preview. They
+> return to blocking the deploy on `main` after the revert.
 | `public/CNAME` → `public/CNAME.sav` | Renamed so Pages ignores it (the `mellea.ai` custom domain belongs to upstream and only works there) | `git mv public/CNAME.sav public/CNAME` before upstream merge |
 
 Quick check before merging upstream:
