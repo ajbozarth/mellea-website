@@ -1,0 +1,139 @@
+'use client';
+
+import { useState, useSyncExternalStore } from 'react';
+import { createPortal } from 'react-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { siteConfig } from '@/config/site';
+import { assetUrl } from '@/lib/assetUrl';
+
+const emptySubscribe = () => () => {};
+
+export default function SiteHeader() {
+  const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  const navLinks = (
+    <>
+      <Link
+        href="/blogs"
+        className={`site-nav__link${pathname.startsWith('/blogs') ? ' site-nav__link--active' : ''}`}
+        onClick={closeMenu}
+      >
+        Blog
+      </Link>
+      <Link
+        href={siteConfig.docsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="site-nav__link"
+        onClick={closeMenu}
+      >
+        Docs
+      </Link>
+      <Link
+        href={siteConfig.discussionsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="site-nav__link"
+        onClick={closeMenu}
+      >
+        Community
+      </Link>
+    </>
+  );
+
+  return (
+    <div className="site-header-shell">
+      <header className="site-header" id="site-header">
+        <Link className="brand" href="/" aria-label="Mellea home" onClick={closeMenu}>
+          <img
+            className="brand__icon"
+            src={assetUrl('/assets/mel-icon.svg')}
+            alt=""
+            width={20}
+            height={17}
+          />
+          <img
+            className="brand__wordmark"
+            src={assetUrl('/assets/mellea-wordmark.svg')}
+            alt="Mellea"
+            width={90}
+            height={24}
+          />
+        </Link>
+
+        <nav className="site-nav" aria-label="Primary">
+          {navLinks}
+        </nav>
+
+        <div className="site-header__actions">
+          <button
+            type="button"
+            className="mobile-menu-toggle"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={menuOpen}
+          >
+            {menuOpen ? (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M4 4l12 12M16 4L4 16" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path d="M3 5h14M3 10h14M3 15h14" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
+              </svg>
+            )}
+          </button>
+
+          <a
+            className="github-btn"
+            href={siteConfig.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Mellea on GitHub"
+          >
+            <img
+              className="github-btn__icon"
+              src={assetUrl('/assets/icon-github.svg')}
+              alt=""
+              width={24}
+              height={24}
+            />
+            <span className="github-btn__stars" data-github-stars aria-hidden="true">
+              &hellip;
+            </span>
+          </a>
+          <Link className="btn btn-nav-get-started" href={siteConfig.docsUrl} target="_blank" rel="noopener noreferrer">
+            <span>Get started</span>
+            <img src={assetUrl('/assets/icon-arrow-up-right.svg')} alt="" width={20} height={20} />
+          </Link>
+        </div>
+      </header>
+
+      {mounted && createPortal(
+        <nav
+          className={`mobile-nav-overlay${menuOpen ? ' mobile-nav-overlay--open' : ''}`}
+          aria-label="Mobile navigation"
+          aria-hidden={!menuOpen}
+        >
+          {navLinks}
+          <Link
+            href={siteConfig.docsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-nav-get-started mobile-nav__cta"
+            onClick={closeMenu}
+          >
+            <span>Get started</span>
+            <img src={assetUrl('/assets/icon-arrow-up-right.svg')} alt="" width={20} height={20} />
+          </Link>
+        </nav>,
+        document.body,
+      )}
+    </div>
+  );
+}

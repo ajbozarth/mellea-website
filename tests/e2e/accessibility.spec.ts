@@ -22,7 +22,6 @@ test('blog index has exactly one h1', async ({ page }) => {
 });
 
 test('blog post has exactly one h1', async ({ page }) => {
-  // Navigate to first available post
   await page.goto('/blogs/');
   const href = await page.getByRole('main').locator('a[href^="/blogs/"]:not([href="/blogs/"])').first().getAttribute('href');
   await page.goto(href!);
@@ -38,13 +37,12 @@ test('all images have alt text', async ({ page }) => {
 
 // ── Keyboard Navigation ──
 
-test('code showcase tabs are keyboard navigable', async ({ page }) => {
+test('future panel tabs are keyboard navigable', async ({ page }) => {
   await page.goto('/');
   const firstTab = page.getByRole('tab').first();
   await firstTab.click();
   await expect(firstTab).toHaveAttribute('aria-selected', 'true');
 
-  // ArrowDown moves to next tab
   await firstTab.press('ArrowDown');
   const secondTab = page.getByRole('tab').nth(1);
   await expect(secondTab).toHaveAttribute('aria-selected', 'true');
@@ -67,10 +65,10 @@ test('external links in header/footer have rel="noopener"', async ({ page }) => 
 
 // ── ARIA Attributes ──
 
-test('code showcase uses proper ARIA roles', async ({ page }) => {
+test('future panel uses proper ARIA roles', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('[role="tablist"]')).toHaveCount(1);
-  await expect(page.locator('[role="tabpanel"]')).toHaveCount(1);
+  await expect(page.locator('[role="tabpanel"]')).toHaveCount(3);
   await expect(page.locator('[role="tab"][aria-selected="true"]')).toHaveCount(1);
+  await expect(page.locator('.future-panel__code.is-active')).toHaveCount(1);
 });
-
