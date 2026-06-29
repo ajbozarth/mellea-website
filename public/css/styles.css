@@ -1940,10 +1940,10 @@ button {
 
 .blog-page__subtitle {
   margin: 0;
-  max-width: 40rem;
   font-size: 1.125rem;
   line-height: 1.5;
   color: var(--text-secondary-blog);
+  white-space: nowrap;
 }
 
 .blog-page__grid {
@@ -2124,6 +2124,10 @@ a.future-panel__learn-more:hover {
   .blog-post-page__inner {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .blog-page__subtitle {
+    white-space: normal;
   }
 }
 
