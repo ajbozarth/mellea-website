@@ -45,7 +45,7 @@ export default function HomePage() {
       <FutureSoftwareSection />
       <GraniteSection />
       <BlogSection blogs={recent} />
-      <SiteFooter />
+      <SiteFooter showCta />
       <CursorToggle />
       <LandingScripts />
     </>

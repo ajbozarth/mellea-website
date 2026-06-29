@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useSyncExternalStore } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -8,11 +8,27 @@ import { siteConfig } from '@/config/site';
 import { assetUrl } from '@/lib/assetUrl';
 
 const emptySubscribe = () => () => {};
+const SCROLL_THRESHOLD = 12;
 
 export default function SiteHeader() {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false);
+
+  useEffect(() => {
+    const updateScrollState = () => {
+      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+    };
+
+    updateScrollState();
+    window.addEventListener('scroll', updateScrollState, { passive: true });
+    window.addEventListener('resize', updateScrollState, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', updateScrollState);
+      window.removeEventListener('resize', updateScrollState);
+    };
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -48,7 +64,10 @@ export default function SiteHeader() {
 
   return (
     <div className="site-header-shell">
-      <header className="site-header" id="site-header">
+      <header
+        className={`site-header${isScrolled ? ' is-scrolled' : ''}`}
+        id="site-header"
+      >
         <Link className="brand" href="/" aria-label="Mellea home" onClick={closeMenu}>
           <img
             className="brand__icon"

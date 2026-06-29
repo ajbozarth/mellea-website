@@ -59,41 +59,44 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             <span>Back to all posts</span>
           </Link>
 
-          <header className="blog-post-page__header">
-            <div className="blog-post-page__meta">
-              <span>{blog.author}</span>
-              <time dateTime={blog.date}>{formatBlogDate(blog.date)}</time>
+          <div className="blog-post-page__article">
+            <header className="blog-post-page__header">
+              <div className="blog-post-page__meta">
+                <time dateTime={blog.date}>{formatBlogDate(blog.date)}</time>
+                <span aria-hidden="true">·</span>
+                <span>{blog.author}</span>
+              </div>
+              <h1 className="blog-post-page__title">{blog.title}</h1>
+              {blog.tags.length > 0 && (
+                <ul className="blog-card__tags" aria-label="Tags">
+                  {blog.tags.map((tag) => (
+                    <li key={tag} className="blog-card__tag">{tag}</li>
+                  ))}
+                </ul>
+              )}
+            </header>
+
+            <div className="blog-post-page__prose prose">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { ignoreMissing: true }]]}
+              >
+                {blog.content}
+              </ReactMarkdown>
             </div>
-            <h1 className="blog-post-page__title">{blog.title}</h1>
-            {blog.tags.length > 0 && (
-              <ul className="blog-card__tags" aria-label="Tags">
-                {blog.tags.map((tag) => (
-                  <li key={tag} className="blog-card__tag">{tag}</li>
-                ))}
-              </ul>
-            )}
-          </header>
 
-          <div className="blog-post-page__prose prose">
-            <ReactMarkdown
-              remarkPlugins={[remarkGfm]}
-              rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { ignoreMissing: true }]]}
-            >
-              {blog.content}
-            </ReactMarkdown>
+            <footer className="blog-post-page__footer">
+              <Link
+                href={siteConfig.discussionsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="blog-section__all-posts"
+              >
+                <span>Discuss this post on GitHub</span>
+                <img src={assetUrl('/assets/icon-arrow-up-right.svg')} alt="" width={20} height={20} />
+              </Link>
+            </footer>
           </div>
-
-          <footer className="blog-post-page__footer">
-            <Link
-              href={siteConfig.discussionsUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-section__all-posts"
-            >
-              <span>Discuss this post on GitHub</span>
-              <img src={assetUrl('/assets/icon-arrow-up-right.svg')} alt="" width={20} height={20} />
-            </Link>
-          </footer>
         </div>
       </article>
     </PageShell>

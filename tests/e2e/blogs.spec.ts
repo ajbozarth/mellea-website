@@ -46,7 +46,7 @@ test('blog post has heading, metadata, and prose content', async ({ page }) => {
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 
-  const article = page.locator('.blog-post-page');
+  const article = page.locator('.blog-post-page__article');
   await expect(article).toContainText(/\d{4}/);
   await expect(article.locator('.prose')).not.toBeEmpty();
 });

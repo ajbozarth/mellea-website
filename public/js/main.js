@@ -11,8 +11,6 @@ import { initCursorToggle } from "./cursorToggle.js";
 import { initFutureSoftwarePanel } from "./futureSoftwarePanel.js";
 import { initMelleaCompare } from "./melleaCompare.js";
 
-const SCROLL_THRESHOLD = 12;
-
 const resolvedConfig = {
   ...cursorConfig,
   sprites: cursorConfig.sprites.map((sprite) => ({
@@ -32,14 +30,6 @@ const siteHeader = document.getElementById("site-header");
 const brandIcon = document.querySelector(".brand__icon");
 
 let cursorFollowerEnabled = false;
-
-function updateHeaderScrollState() {
-  const isScrolled = window.scrollY > SCROLL_THRESHOLD;
-
-  if (siteHeader) {
-    siteHeader.classList.toggle("is-scrolled", isScrolled);
-  }
-}
 
 function syncBrandIconForFollower(isActive) {
   if (siteHeader) {
@@ -86,7 +76,3 @@ cursor.start();
 trail.start();
 cursor.setVisible(false);
 trail.syncVisibility(false);
-
-window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
-window.addEventListener("resize", updateHeaderScrollState, { passive: true });
-updateHeaderScrollState();
