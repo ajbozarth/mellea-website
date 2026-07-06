@@ -35,13 +35,6 @@ export default function SiteHeader() {
   const navLinks = (
     <>
       <Link
-        href="/blogs"
-        className={`site-nav__link${pathname.startsWith('/blogs') ? ' site-nav__link--active' : ''}`}
-        onClick={closeMenu}
-      >
-        Blog
-      </Link>
-      <Link
         href={siteConfig.docsUrl}
         target="_blank"
         rel="noopener noreferrer"
@@ -49,6 +42,13 @@ export default function SiteHeader() {
         onClick={closeMenu}
       >
         Docs
+      </Link>
+      <Link
+        href="/blogs"
+        className={`site-nav__link${pathname.startsWith('/blogs') ? ' site-nav__link--active' : ''}`}
+        onClick={closeMenu}
+      >
+        Blog
       </Link>
       <Link
         href={siteConfig.discussionsUrl}

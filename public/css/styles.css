@@ -1535,7 +1535,7 @@ button {
   flex: 1;
   font-family: var(--font-body);
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   color: var(--text-secondary-blog);
 }
