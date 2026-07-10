@@ -1,42 +1,29 @@
 /*
- * Mellea code syntax theme (highlight.js / lowlight `.hljs-*` classes).
- *
- * Colors are the designer's Mellea brand palette (source: brand palette doc),
- * mapped from his own tagged Python example. Token → brand color:
- *   keyword   #9A5804              (from, import, class, def)
- *   function  #D32608  Vermillion  (function/method names)
- *   string    #005EED  Cobalt      (strings, docstrings)
- *   type      #6B2F66  Plum        (types, classes: BaseModel, int, str, Literal)
- *   decorator #6B2F66  Plum italic (@generative)
- *   comment   #878684  italic
- *   operator  #787777
- *   plain     #171717  Ink-ish     (default code text)
- *
- * The site is LIGHT-ONLY. The brand palette also defines a dark-SURFACE variant
- * (for a code block deliberately placed on a dark background); it is included
- * below as an opt-in `.hljs--on-dark` modifier but is NOT wired to any
- * system-theme / prefers-color-scheme detection and is currently UNUSED.
- * Kept here so the full palette lives in one place.
+ * Mellea code syntax theme for highlight.js / lowlight (`.hljs-*` classes).
+ * Self-contained: light theme is active; `.hljs--on-dark` is an unused opt-in
+ * variant for code on a dark surface (not tied to prefers-color-scheme).
  */
 
 :root {
-  /* Mellea brand palette */
-  --mellea-honey: #ffa715;
-  --mellea-cobalt: #005eed;
-  --mellea-vermillion: #d32608;
-  --mellea-plum: #6b2f66;
-  --mellea-ink: #111111;
-  --mellea-chalk: #fafafa;
-
-  /* Code syntax — light (active) */
+  /* Light syntax palette (active) */
   --code-plain: #171717;
   --code-operator: #787777;
   --code-comment: #878684;
   --code-keyword: #9a5804;
-  --code-function: var(--mellea-vermillion);
-  --code-string: var(--mellea-cobalt);
-  --code-type: var(--mellea-plum);
-  --code-decorator: var(--mellea-plum);
+  --code-function: #d32608;
+  --code-string: #005eed;
+  --code-type: #6b2f66;
+  --code-decorator: #6b2f66;
+
+  /* Dark-surface syntax palette (used only by .hljs--on-dark) */
+  --code-plain-dark: #ede9e4;
+  --code-operator-dark: #8c8785;
+  --code-comment-dark: #8a8480;
+  --code-keyword-dark: #ffa715;
+  --code-function-dark: #ff6b4a;
+  --code-string-dark: #85aaff;
+  --code-type-dark: #d4a0cf;
+  --code-decorator-dark: #d4a0cf;
 }
 
 .hljs {
@@ -44,21 +31,18 @@
   background: transparent;
 }
 
-/* keyword family: from/import/class/def, and control-flow literals */
 .hljs-keyword,
 .hljs-literal,
 .hljs-selector-tag {
   color: var(--code-keyword);
 }
 
-/* function/method names */
 .hljs-title,
 .hljs-title.function_,
 .hljs-section {
   color: var(--code-function);
 }
 
-/* types & classes */
 .hljs-type,
 .hljs-title.class_,
 .hljs-built_in,
@@ -66,7 +50,6 @@
   color: var(--code-type);
 }
 
-/* strings (incl. docstrings) */
 .hljs-string,
 .hljs-meta .hljs-string,
 .hljs-regexp,
@@ -74,75 +57,67 @@
   color: var(--code-string);
 }
 
-/* decorators (@generative) — plum, italic like the brand doc */
 .hljs-meta {
   color: var(--code-decorator);
   font-style: italic;
 }
 
-/* comments */
 .hljs-comment,
 .hljs-quote {
   color: var(--code-comment);
   font-style: italic;
 }
 
-/* operators / punctuation */
 .hljs-operator,
 .hljs-punctuation {
   color: var(--code-operator);
 }
 
-/* params, attrs, variables default to plain text */
 .hljs-params,
 .hljs-attr,
 .hljs-variable {
   color: var(--code-plain);
 }
 
-/*
- * Dark-surface variant — UNUSED / opt-in only. Apply `.hljs--on-dark` to a code
- * block that intentionally sits on Ink (#111111) / #1c1c1c. Not tied to
- * prefers-color-scheme; the site does not have a dark mode.
- */
+/* Opt-in variant for code on a dark surface (unused; add .hljs--on-dark). */
 .hljs--on-dark {
-  color: #ede9e4;
+  color: var(--code-plain-dark);
 }
 .hljs--on-dark .hljs-keyword,
 .hljs--on-dark .hljs-literal,
 .hljs--on-dark .hljs-selector-tag {
-  color: var(--mellea-honey);
+  color: var(--code-keyword-dark);
 }
 .hljs--on-dark .hljs-title,
 .hljs--on-dark .hljs-title.function_,
 .hljs--on-dark .hljs-section {
-  color: #ff6b4a;
+  color: var(--code-function-dark);
 }
 .hljs--on-dark .hljs-type,
 .hljs--on-dark .hljs-title.class_,
 .hljs--on-dark .hljs-built_in,
 .hljs--on-dark .hljs-class .hljs-title {
-  color: #d4a0cf;
+  color: var(--code-type-dark);
 }
 .hljs--on-dark .hljs-string,
 .hljs--on-dark .hljs-meta .hljs-string,
 .hljs--on-dark .hljs-regexp,
 .hljs--on-dark .hljs-number {
-  color: #85aaff;
+  color: var(--code-string-dark);
 }
 .hljs--on-dark .hljs-meta {
-  color: #d4a0cf;
+  color: var(--code-decorator-dark);
 }
 .hljs--on-dark .hljs-comment,
 .hljs--on-dark .hljs-quote {
-  color: #8a8480;
+  color: var(--code-comment-dark);
 }
 .hljs--on-dark .hljs-operator,
 .hljs--on-dark .hljs-punctuation {
-  color: #8c8785;
+  color: var(--code-operator-dark);
 }
 .hljs--on-dark .hljs-params,
 .hljs--on-dark .hljs-attr,
 .hljs--on-dark .hljs-variable {
-  color: #ede9e4;
+  color: var(--code-plain-dark);
 }

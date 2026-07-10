@@ -1,25 +1,33 @@
 /* Design tokens — Mellea landing (Figma 1160:18950) */
 :root {
+  /* Brand colors */
+  --mellea-honey: #fdb602;
+  --mellea-honey-light: #ffe8af;
+
+  /* Reused role colors */
+  --surface: #f4f4f4;
+  --gray-border: #c6c6c6;
+
   --page-bg: #faf8f5;
   --text-primary: #161616;
   --text-heading: #272525;
   --text-secondary: #474747;
   --text-secondary-blog: #525252;
   --text-helper: #6f6f6f;
-  --btn-primary-bg: #ffe8af;
+  --btn-primary-bg: var(--mellea-honey-light);
   --btn-nav-bg: #171c21;
   --btn-secondary-border: #e0e0e0;
   --btn-group-gap: 16px;
-  --github-circle: #fdb602;
+  --github-circle: var(--mellea-honey);
 
   --font-display: "Aileron", system-ui, sans-serif;
   --font-body: "Aileron", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-mono-semibold: 600;
   --letter-spacing-body: 0.5px;
-  --mel-toggle-on-bg: #fdb602;
+  --mel-toggle-on-bg: var(--mellea-honey);
   --mel-toggle-off-bg: #898989;
-  --mel-toggle-track-on: #ffe8af;
+  --mel-toggle-track-on: var(--mellea-honey-light);
   --mel-toggle-track-off: #d9d9d9;
 
   --sprite-width: 46px;
@@ -494,8 +502,8 @@ button {
 .btn-secondary.btn-pip-install,
 .btn-secondary.site-footer__github-btn {
   font-size: 16px;
-  background: #f4f4f4;
-  border-color: #c6c6c6;
+  background: var(--surface);
+  border-color: var(--gray-border);
   color: var(--text-primary);
 }
 
@@ -555,7 +563,7 @@ button {
 }
 
 .btn-secondary:hover {
-  background: #f4f4f4;
+  background: var(--surface);
 }
 
 /* Full-bleed section backgrounds */
@@ -817,7 +825,7 @@ button {
   height: 100%;
   border-radius: 6px;
   overflow: hidden;
-  background: #F4F4F4;
+  background: var(--surface);
   display: flex;
   flex-direction: column;
 }
@@ -1053,7 +1061,7 @@ button {
   height: 18.75rem;
   min-height: 18.75rem;
   padding: 1.5rem;
-  border: 1px solid #c6c6c6;
+  border: 1px solid var(--gray-border);
   border-radius: 6px;
   background: #fff;
   transition:
@@ -1138,14 +1146,14 @@ button {
   grid-template-columns: minmax(0, 36.9%) minmax(0, 1fr);
   width: 100%;
   min-height: 48.3125rem;
-  border: 1px solid #c6c6c6;
-  background: #f4f4f4;
+  border: 1px solid var(--gray-border);
+  background: var(--surface);
 }
 
 .future-panel__nav {
   display: flex;
   flex-direction: column;
-  border-right: 1px solid #c6c6c6;
+  border-right: 1px solid var(--gray-border);
 }
 
 .future-panel__tab {
@@ -1157,9 +1165,9 @@ button {
   min-height: 3.75rem;
   padding: 0.875rem 0.9375rem;
   border: none;
-  border-bottom: 1px solid #c6c6c6;
-  border-left: 4px solid #c6c6c6;
-  background: #f4f4f4;
+  border-bottom: 1px solid var(--gray-border);
+  border-left: 4px solid var(--gray-border);
+  background: var(--surface);
   text-align: left;
   cursor: pointer;
   transition:
@@ -1171,8 +1179,8 @@ button {
 
 .future-panel__tab.is-active {
   min-height: 10.625rem;
-  border-left-color: #fdb602;
-  background: #ffe8af;
+  border-left-color: var(--mellea-honey);
+  background: var(--mellea-honey-light);
 }
 
 .future-panel__tab-title {
@@ -1219,7 +1227,7 @@ button {
   display: flex;
   flex-direction: column;
   min-width: 0;
-  background: #f4f4f4;
+  background: var(--surface);
 }
 
 .future-panel__code-header {
@@ -1228,8 +1236,8 @@ button {
   justify-content: space-between;
   min-height: 2.125rem;
   padding: 1rem 1rem 1rem 3rem;
-  border-bottom: 1px solid #c6c6c6;
-  background: #f4f4f4;
+  border-bottom: 1px solid var(--gray-border);
+  background: var(--surface);
 }
 
 .future-panel__code-label {
@@ -1368,7 +1376,7 @@ button {
   min-height: 22.0625rem;
   padding: 2rem;
   border-radius: 6px;
-  background: #f4f4f4;
+  background: var(--surface);
 }
 
 .granite__card-title {
@@ -1400,7 +1408,7 @@ button {
 }
 
 .granite__card .btn-ghost {
-  border-color: #c6c6c6;
+  border-color: var(--gray-border);
 }
 
 /* From the blog (Figma 1552:487) */
@@ -1722,7 +1730,7 @@ button {
 
   .future-panel__nav {
     border-right: none;
-    border-bottom: 1px solid #c6c6c6;
+    border-bottom: 1px solid var(--gray-border);
   }
 
   .future-panel__tab.is-active {
@@ -2035,7 +2043,7 @@ button {
   padding: 1.25rem;
   overflow-x: auto;
   border-radius: 0.5rem;
-  background: #f4f4f3;
+  background: var(--surface);
   font-family: var(--font-mono);
   font-size: 0.875rem;
   line-height: 1.6;
