@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
+import ReactMarkdown, { defaultUrlTransform } from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
@@ -80,6 +80,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 rehypePlugins={[rehypeRaw, rehypeSlug, [rehypeHighlight, { ignoreMissing: true }]]}
+                urlTransform={(url) => {
+                  const safe = defaultUrlTransform(url);
+                  return safe.startsWith('/') ? assetUrl(safe) : safe;
+                }}
               >
                 {blog.content}
               </ReactMarkdown>
