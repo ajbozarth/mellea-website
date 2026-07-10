@@ -1,8 +1,10 @@
-'use client';
-
 import Link from 'next/link';
+import hljs from 'highlight.js/lib/core';
+import python from 'highlight.js/lib/languages/python';
 import { siteConfig } from '@/config/site';
 import { assetUrl } from '@/lib/assetUrl';
+
+hljs.registerLanguage('python', python);
 
 const TABS = [
   {
@@ -11,26 +13,26 @@ const TABS = [
     description:
       'Write a typed Python function, get structured LLM output. Docstrings are prompts, type hints are schemas — no parsers, no chains.',
     learnMoreUrl: siteConfig.docsGenerativeFunctionsUrl,
-    code: `<code><span class="code-kw">from</span> typing <span class="code-kw">import</span> Literal
-<span class="code-kw">from</span> pydantic <span class="code-kw">import</span> BaseModel
-<span class="code-kw">from</span> mellea <span class="code-kw">import</span> generative, start_session
+    code: `from typing import Literal
+from pydantic import BaseModel
+from mellea import generative, start_session
 
-<span class="code-kw">class</span> <span class="code-type">ReviewAnalysis</span>(BaseModel):
-    sentiment: Literal[<span class="code-str">"positive"</span>, <span class="code-str">"negative"</span>, <span class="code-str">"neutral"</span>]
-    score: <span class="code-type">int</span>    <span class="code-cmt"># 1-5</span>
-    summary: <span class="code-type">str</span>  <span class="code-cmt"># one sentence</span>
+class ReviewAnalysis(BaseModel):
+    sentiment: Literal["positive", "negative", "neutral"]
+    score: int    # 1-5
+    summary: str  # one sentence
 
-<span class="code-fn">@generative</span>
-<span class="code-kw">def</span> <span class="code-fn">analyze_review</span>(text: <span class="code-type">str</span>) -&gt; ReviewAnalysis:
-    <span class="code-str">"""Extract sentiment, a 1-5 score, and a one-sentence summary."""</span>
+@generative
+def analyze_review(text: str) -> ReviewAnalysis:
+    """Extract sentiment, a 1-5 score, and a one-sentence summary."""
     ...
 
 m = start_session()
-result = analyze_review(m, text=<span class="code-str">"Battery life is great but the screen is dim"</span>)
+result = analyze_review(m, text="Battery life is great but the screen is dim")
 
-<span class="code-builtin">print</span>(result.sentiment)  <span class="code-cmt"># "positive", "negative", or "neutral" — always</span>
-<span class="code-builtin">print</span>(result.score)      <span class="code-cmt"># an int, 1-5 — always</span>
-<span class="code-builtin">print</span>(result.summary)    <span class="code-cmt"># a str — always</span></code>`,
+print(result.sentiment)  # "positive", "negative", or "neutral" — always
+print(result.score)      # an int, 1-5 — always
+print(result.summary)    # a str — always`,
   },
   {
     id: 'instruct',
@@ -38,26 +40,26 @@ result = analyze_review(m, text=<span class="code-str">"Battery life is great bu
     description:
       'Add requirements to any LLM call. Mellea validates outputs and retries automatically — swap between rejection sampling, majority voting, and more with one parameter.',
     learnMoreUrl: siteConfig.docsRequirementsUrl,
-    code: `<code><span class="code-kw">import</span> mellea
-<span class="code-kw">from</span> mellea.stdlib.sampling <span class="code-kw">import</span> RejectionSamplingStrategy
+    code: `import mellea
+from mellea.stdlib.sampling import RejectionSamplingStrategy
 
-<span class="code-kw">def</span> <span class="code-fn">write_email_with_strategy</span>(m: mellea.MelleaSession, name: <span class="code-type">str</span>, notes: <span class="code-type">str</span>) -&gt; <span class="code-type">str</span>:
+def write_email_with_strategy(m: mellea.MelleaSession, name: str, notes: str) -> str:
     email_candidate = m.instruct(
-        <span class="code-str">f"Write an email to {name} using the notes following: {notes}."</span>,
+        f"Write an email to {name} using the notes following: {notes}.",
         requirements=[
-            <span class="code-str">"The email should have a salutation."</span>,
-            <span class="code-str">"Use a formal tone."</span>,
+            "The email should have a salutation.",
+            "Use a formal tone.",
         ],
         strategy=RejectionSamplingStrategy(loop_budget=3),
-        return_sampling_results=<span class="code-kw">True</span>,
+        return_sampling_results=True,
     )
 
-    <span class="code-kw">if</span> email_candidate.success:
-        <span class="code-kw">return</span> <span class="code-type">str</span>(email_candidate.result)
+    if email_candidate.success:
+        return str(email_candidate.result)
 
-    <span class="code-cmt"># If sampling fails, use the first generation</span>
-    <span class="code-builtin">print</span>(<span class="code-str">"Expect sub-par result."</span>)
-    <span class="code-kw">return</span> email_candidate.sample_generations[<span class="code-num">0</span>].value</code>`,
+    # If sampling fails, use the first generation
+    print("Expect sub-par result.")
+    return email_candidate.sample_generations[0].value`,
   },
   {
     id: 'safety',
@@ -65,26 +67,31 @@ result = analyze_review(m, text=<span class="code-str">"Battery life is great bu
     description:
       'Detect harmful outputs, social bias, and jailbreak attempts before they reach your users — using built-in Granite Guardian integration, with no external service required.',
     learnMoreUrl: siteConfig.docsSafetyUrl,
-    code: `<code><span class="code-kw">import</span> mellea
-<span class="code-kw">from</span> mellea.stdlib.requirements.safety.guardian <span class="code-kw">import</span> (
+    code: `import mellea
+from mellea.stdlib.requirements.safety.guardian import (
     GuardianCheck, GuardianRisk,
 )
 
 m = mellea.start_session()
 
 response = m.instruct(
-    <span class="code-str">"Write a helpful customer support response to: "</span>
-    <span class="code-str">"How do I reset my password?"</span>,
+    "Write a helpful customer support response to: "
+    "How do I reset my password?",
     requirements=[
-        <span class="code-str">"Be concise and professional."</span>,
+        "Be concise and professional.",
         GuardianCheck(GuardianRisk.HARM),
         GuardianCheck(GuardianRisk.SOCIAL_BIAS),
     ],
 )
 
-<span class="code-builtin">print</span>(response)  <span class="code-cmt"># validated — or retried until it passes</span></code>`,
+print(response)  # validated — or retried until it passes`,
   },
 ] as const;
+
+/** Highlighted at build time (Server Component) — ships static HTML, no client-side highlighting. */
+function highlight(code: string): string {
+  return hljs.highlight(code, { language: 'python' }).value;
+}
 
 export default function FutureSoftwareSection() {
   return (
@@ -116,7 +123,6 @@ export default function FutureSoftwareSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="future-panel__learn-more"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     Learn more
                     <span className="btn__icon-mask btn__icon-mask--arrow-up-right" aria-hidden="true" />
@@ -150,8 +156,12 @@ export default function FutureSoftwareSection() {
                   aria-labelledby={`future-tab-${tab.id}`}
                   tabIndex={0}
                   hidden={index !== 0}
-                  dangerouslySetInnerHTML={{ __html: tab.code }}
-                />
+                >
+                  <code
+                    className="hljs language-python"
+                    dangerouslySetInnerHTML={{ __html: highlight(tab.code) }}
+                  />
+                </pre>
               ))}
             </div>
           </div>

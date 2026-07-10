@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
 import { assetUrl } from '@/lib/assetUrl';
-import GitHubStarsInit from '@/components/redesign/GitHubStarsInit';
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
@@ -59,17 +58,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" data-asset-base={basePath}>
+    <html lang="en" data-asset-base={basePath} data-scroll-behavior="smooth">
       <head>
         <link rel="stylesheet" href={assetUrl('/assets/fonts.css')} />
         <link rel="stylesheet" href={assetUrl('/css/styles.css')} />
+        <link rel="stylesheet" href={assetUrl('/css/code-theme.css')} />
       </head>
       <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <GitHubStarsInit />
         {children}
       </body>
     </html>

@@ -355,7 +355,8 @@ export function createCursorSprite(config) {
       () => motion.getPosition(),
       (x, y) => motion.setPosition(x, y),
       target,
-      CURSOR_EXIT_MS
+      CURSOR_EXIT_MS,
+      () => token !== animToken
     );
 
     if (token !== animToken) return;
@@ -380,7 +381,8 @@ export function createCursorSprite(config) {
       () => motion.getPosition(),
       (x, y) => motion.setPosition(x, y),
       () => motion.getFollowTarget(),
-      CURSOR_ENTER_MS
+      CURSOR_ENTER_MS,
+      () => token !== animToken
     );
 
     if (token !== animToken) return;
@@ -402,10 +404,8 @@ export function createCursorSprite(config) {
     if (wantVisible) {
       if (lifecycle === "active" || lifecycle === "entering") return;
 
+      // Bumping animToken cancels any in-flight exit before we enter.
       const token = ++animToken;
-      if (lifecycle === "exiting") {
-        /* interrupt exit and enter */
-      }
       runEnter(token);
       return;
     }

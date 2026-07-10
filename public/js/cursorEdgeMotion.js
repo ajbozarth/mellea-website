@@ -87,9 +87,10 @@ export function getRandomEdgeOrigin(excludeNear) {
  * @param {(x: number, y: number) => void} setPosition
  * @param {{ x: number, y: number } | (() => { x: number, y: number })} to
  * @param {number} durationMs
+ * @param {() => boolean} [isCancelled] Abort the loop when true (prevents a superseded animation fighting over setPosition).
  * @returns {Promise<void>}
  */
-export function animatePosition(getPosition, setPosition, to, durationMs) {
+export function animatePosition(getPosition, setPosition, to, durationMs, isCancelled) {
   const from = getPosition();
   const resolveTarget =
     typeof to === "function" ? to : () => /** @type {{ x: number, y: number }} */ (to);
@@ -97,6 +98,11 @@ export function animatePosition(getPosition, setPosition, to, durationMs) {
 
   return new Promise((resolve) => {
     function frame(now) {
+      if (isCancelled?.()) {
+        resolve();
+        return;
+      }
+
       const t = Math.min((now - start) / durationMs, 1);
       const eased = easeOutCubic(t);
       const target = resolveTarget();

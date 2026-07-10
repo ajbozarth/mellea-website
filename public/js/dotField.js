@@ -434,6 +434,7 @@ export function createDotField(mount, options = {}) {
 
   function destroy() {
     stop();
+    reducedMotion.removeEventListener("change", handleMotionPreferenceChange);
     container.remove();
   }
 

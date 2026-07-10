@@ -130,7 +130,7 @@ export function createCursorTrail(options) {
     const pos = getPosition();
     const target = getNearestEdgeTarget(pos.x, pos.y);
 
-    await animatePosition(getPosition, setPosition, target, CURSOR_EXIT_MS);
+    await animatePosition(getPosition, setPosition, target, CURSOR_EXIT_MS, () => token !== animToken);
 
     if (token !== animToken) return;
 
@@ -148,7 +148,7 @@ export function createCursorTrail(options) {
     setPosition(origin.x, origin.y);
     container.classList.add("cursor-sprite--visible");
 
-    await animatePosition(getPosition, setPosition, () => getOffsetTarget(), CURSOR_ENTER_MS);
+    await animatePosition(getPosition, setPosition, () => getOffsetTarget(), CURSOR_ENTER_MS, () => token !== animToken);
 
     if (token !== animToken) return;
 
@@ -203,7 +203,7 @@ export function createCursorTrail(options) {
           setSectionActive(entry.isIntersecting);
         });
       },
-      { threshold: 0.15, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.15, rootMargin: "-15% 0px -10% 0px" }
     );
 
     observer.observe(section);

@@ -113,7 +113,12 @@ test('future panel tab switching changes code panel', async ({ page }) => {
   const tabs = page.locator('[role="tab"]');
 
   const firstContent = await panel.textContent();
-  await tabs.nth(1).click();
+  // The tab handler is wired by an afterInteractive script, so a click can
+  // land before it binds. Retry the click until the switch actually takes.
+  await expect(async () => {
+    await tabs.nth(1).click();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+  }).toPass();
   const secondContent = await panel.textContent();
   expect(secondContent).not.toBe(firstContent);
 });

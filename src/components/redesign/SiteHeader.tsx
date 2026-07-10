@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { siteConfig } from '@/config/site';
 import { assetUrl } from '@/lib/assetUrl';
+import GitHubStarsInit from './GitHubStarsInit';
 
 const emptySubscribe = () => () => {};
 const SCROLL_THRESHOLD = 12;
@@ -64,6 +65,7 @@ export default function SiteHeader() {
 
   return (
     <div className="site-header-shell">
+      <GitHubStarsInit />
       <header
         className={`site-header${isScrolled ? ' is-scrolled' : ''}`}
         id="site-header"

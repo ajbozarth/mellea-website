@@ -1,6 +1,8 @@
 /**
  * "Here's the future of software" tabbed code panel (mellea.ai-style).
  */
+import { copyText } from "./clipboard.js";
+
 const COPY_RESET_MS = 2000;
 
 const PANELS = [
@@ -8,26 +10,6 @@ const PANELS = [
   { id: "instruct", copyTarget: "#future-code-instruct" },
   { id: "safety", copyTarget: "#future-code-safety" },
 ];
-
-/**
- * @param {string} text
- */
-async function copyText(text) {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.left = "-9999px";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  document.body.removeChild(textarea);
-}
 
 /**
  * @param {HTMLElement} root
@@ -110,6 +92,9 @@ export function initFutureSoftwarePanel() {
   if (!tablist) return;
 
   tablist.addEventListener("click", (event) => {
+    // Let the "Learn more" link navigate without also switching the tab.
+    if (event.target.closest(".future-panel__learn-more")) return;
+
     const tab = /** @type {HTMLElement | null} */ (
       event.target.closest(".future-panel__tab")
     );

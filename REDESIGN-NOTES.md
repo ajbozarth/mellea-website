@@ -24,11 +24,10 @@ the new site keeps its content, assets, and CI:
 
 | Path | Why it must stay |
 |------|------------------|
-| `content/` | ⭐ The entire editorial corpus — 17 blogs + 3 news posts. Irreplaceable. |
+| `content/blogs/` | ⭐ The entire editorial corpus — 17 blog posts. Irreplaceable. |
 | `public/images/` | Images referenced by blog markdown via `/images/...`. Losing these breaks posts. |
 | `public/llms.txt` | LLM crawler manifest (SEO). |
 | `public/robots.txt` | Crawler rules. |
-| `public/favicon.svg` | Site favicon. |
 | `public/CNAME.sav` | Stashed upstream custom domain — restore to `CNAME` before upstream merge (see revert-list). |
 | `public/mellea-logo.svg` / `.png` (under `public/images/`) | Brand assets used across content. |
 | `templates/blog-post.md` | Blog authoring template that `AGENTS.md` directs authors to. |

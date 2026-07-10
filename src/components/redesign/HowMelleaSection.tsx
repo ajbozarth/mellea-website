@@ -114,7 +114,7 @@ export default function HowMelleaSection() {
             <h3 className="feature-card__title">Predictable</h3>
             <p className="feature-card__text">
               Set the requirements that you want Mellea to validate. Automatic
-              retires means unwanted outputs never reach your users.
+              retries mean unwanted outputs never reach your users.
             </p>
           </article>
           <article className="feature-card">
