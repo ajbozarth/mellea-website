@@ -8,7 +8,7 @@ export const siteConfig = {
   docsUrl: 'https://docs.mellea.ai',
   githubUrl: 'https://github.com/generative-computing/mellea',
   discussionsUrl: 'https://github.com/generative-computing/mellea/discussions',
-  ogImage: 'https://mellea.ai/images/mellea-logo.png',
+  ogImage: 'https://mellea.ai/assets/mellea-site-logo-social.png',
 
   graniteModelsUrl: 'https://www.ibm.com/granite',
   graniteDemosUrl: 'https://github.com/ibm-granite-community',

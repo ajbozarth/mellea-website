@@ -5,14 +5,14 @@
 export const cursorConfig = {
   defaultSprite: "a",
   sprites: [
-    { id: "a", src: "assets/a.svg" },
-    { id: "b", src: "assets/b.svg" },
-    { id: "c", src: "assets/c.svg" },
-    { id: "d", src: "assets/d.svg" },
-    { id: "e", src: "assets/e.svg" },
-    { id: "f", src: "assets/f.svg", scale: 1.4 },
+    { id: "a", src: "assets/mel-a.svg" },
+    { id: "b", src: "assets/mel-b.svg" },
+    { id: "c", src: "assets/mel-c.svg" },
+    { id: "d", src: "assets/mel-d.svg" },
+    { id: "e", src: "assets/mel-e.svg" },
+    { id: "f", src: "assets/mel-f.svg", scale: 1.4 },
     /* 57×55 art — enlarged for Get started hover */
-    { id: "h", src: "assets/h.svg", scale: 1 },
+    { id: "h", src: "assets/mel-h.svg", scale: 1 },
   ],
   triggers: [
     { id: "default", type: "default", sprite: "a", priority: 0 },

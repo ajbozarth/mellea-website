@@ -27,7 +27,7 @@ function setup() {
 
   const cursor = createCursorSprite(resolvedConfig);
   const trail = createCursorTrail({
-    src: assetUrl("assets/g.svg"),
+    src: assetUrl("assets/mel-g.svg"),
     sectionSelector: "#granite-section",
     getFollowTarget: () => cursor.getAnchorPosition(),
     onSectionChange: () => syncCursorFollowerVisibility(),
