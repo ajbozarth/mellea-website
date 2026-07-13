@@ -277,6 +277,7 @@ export function createDotField(mount, options = {}) {
     const len = dots.length;
 
     const targetEngagement = Math.min(m.speed / 5, 1);
+    // Ease toward target by a fraction each frame (smaller = slower/smoother).
     engagement.current += (targetEngagement - engagement.current) * 0.06;
     if (engagement.current < 0.001) engagement.current = 0;
     const eng = engagement.current;
@@ -292,7 +293,7 @@ export function createDotField(mount, options = {}) {
     }
 
     if (glowCircle) {
-      glowOpacity.current += (eng - glowOpacity.current) * 0.08;
+      glowOpacity.current += (eng - glowOpacity.current) * 0.08; // glow follows engagement
       glowCircle.setAttribute("cx", String(m.x));
       glowCircle.setAttribute("cy", String(m.y));
       glowCircle.style.opacity = String(glowOpacity.current);
@@ -322,7 +323,7 @@ export function createDotField(mount, options = {}) {
             const factor = 1 - dist / cr;
             const push = factor * factor * p.bulgeStrength * eng;
             const angle = Math.atan2(dy, dx);
-            d.sx += (d.ax - Math.cos(angle) * push - d.sx) * 0.15;
+            d.sx += (d.ax - Math.cos(angle) * push - d.sx) * 0.15; // ease into the bulge
             d.sy += (d.ay - Math.sin(angle) * push - d.sy) * 0.15;
           } else {
             const angle = Math.atan2(dy, dx);
@@ -331,7 +332,7 @@ export function createDotField(mount, options = {}) {
             d.vy += Math.sin(angle) * -move;
           }
         } else if (isBulge) {
-          d.sx += (d.ax - d.sx) * 0.1;
+          d.sx += (d.ax - d.sx) * 0.1; // ease back to rest
           d.sy += (d.ay - d.sy) * 0.1;
         }
 
@@ -340,7 +341,7 @@ export function createDotField(mount, options = {}) {
           d.vy *= 0.9;
           d.x = d.ax + d.vx;
           d.y = d.ay + d.vy;
-          d.sx += (d.x - d.sx) * 0.1;
+          d.sx += (d.x - d.sx) * 0.1; // ease toward velocity-integrated position
           d.sy += (d.y - d.sy) * 0.1;
         }
       } else {

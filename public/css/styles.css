@@ -1,5 +1,8 @@
 /* Design tokens — Mellea landing */
 :root {
+  /* Light-only site — render native UI (controls, scrollbars) light */
+  color-scheme: light;
+
   /* Brand colors */
   --mellea-honey: #fdb602;
   --mellea-honey-light: #ffe8af;
@@ -1791,6 +1794,16 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Safety net: neutralize any animation not covered by the rules below */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+
   .cursor-sprite,
   .cursor-sprite--trail {
     display: none;
