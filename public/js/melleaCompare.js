@@ -26,7 +26,6 @@ function setSplit(root, ratio) {
  * @param {number} clientX
  */
 function ratioFromPointer(stage, frame, clientX) {
-  const stageRect = stage.getBoundingClientRect();
   const frameRect = frame.getBoundingClientRect();
 
   if (clientX <= frameRect.left) return 0;

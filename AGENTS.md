@@ -123,6 +123,10 @@ If you rename or remove a CSS class, check `tests/e2e/` for selectors that refer
 - Landing-page interactions (cursor, hero, compare slider, code panel) are vanilla ES modules in `public/js/`
 - Plain CSS only — no CSS modules, no Tailwind
 
+### Landing-page JS (`public/js/`)
+
+These are plain browser ES modules — served statically and loaded via a `<script type="module">` tag, not bundled or transpiled. They are JavaScript, not TypeScript, and are intentionally outside `tsconfig`, so `npm run typecheck` does not cover them. The JSDoc `@param`/`@returns` annotations are for editor hints and readability only; they are **not** enforced by `tsc`, so do not assume these files are type-checked because they carry JSDoc. ESLint is the quality gate here — the flat config lints `public/js/**/*.js` with `eslint:recommended` plus `no-unused-vars`/`no-undef` and browser globals.
+
 ### Deployment
 
 Pushing to `main` triggers `.github/workflows/nextjs.yml`. Pipeline: lint → (test-unit ∥ build) → test-e2e → deploy. Static artifact produced by `next build` with `output: 'export'`, deployed to GitHub Pages.

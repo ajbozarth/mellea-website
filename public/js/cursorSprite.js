@@ -308,7 +308,6 @@ export function createCursorSprite(config) {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let started = false;
   let listenersBound = false;
-  let visible = false;
   let motionRunning = false;
   /** @type {"hidden" | "active" | "exiting" | "entering"} */
   let lifecycle = "hidden";
@@ -328,7 +327,6 @@ export function createCursorSprite(config) {
 
   function setVisibleInstant(isVisible) {
     lifecycle = isVisible ? "active" : "hidden";
-    visible = isVisible;
     container.classList.toggle("cursor-sprite--visible", isVisible);
 
     if (isVisible) {
@@ -362,7 +360,6 @@ export function createCursorSprite(config) {
     if (token !== animToken) return;
 
     lifecycle = "hidden";
-    visible = false;
     container.classList.remove("cursor-sprite--visible");
     motion.setPosition(target.x, target.y);
   }
@@ -388,7 +385,6 @@ export function createCursorSprite(config) {
     if (token !== animToken) return;
 
     lifecycle = "active";
-    visible = true;
     motion.setFollowing(true);
     syncMotion();
   }
