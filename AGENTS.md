@@ -38,7 +38,9 @@ npm run build         # Static export to ./out/
 | `src/lib/` | Server-side utilities (blog parsing, etc.) |
 | `src/config/` | Site-wide configuration (`site.ts`) |
 | `content/blogs/` | Markdown blog posts with YAML front matter |
-| `public/` | Static assets (images, CNAME) |
+| `public/css/` | Global stylesheets |
+| `public/js/` | Vanilla ES-module landing-page interactions |
+| `public/` | Static assets (fonts, images, CNAME) |
 | `tests/unit/` | Vitest unit tests |
 | `tests/e2e/` | Playwright E2E tests |
 | `.github/workflows/` | CI pipeline |
@@ -48,8 +50,8 @@ npm run build         # Static export to ./out/
 - TypeScript throughout — no `any` without a comment explaining why
 - Server Components by default; add `'use client'` only when needed
 - `src/lib/blogs.ts` uses Node.js `fs` — never import it in Client Components
-- `params` in Next.js 15 page components is a `Promise` — always `await params`
-- No CSS modules, no Tailwind — all styles in `src/app/globals.css`
+- `params` in page components is a `Promise` — always `await params`
+- Plain CSS only — no CSS modules, no Tailwind; global styles live in `public/css/`
 - `src/config/site.ts` is the single source of truth for URLs and repo slug
 
 ## 4. AI Coding Assistants
@@ -98,14 +100,14 @@ If you rename or remove a CSS class, check `tests/e2e/` for selectors that refer
 
 ## 7. Architecture
 
-**Next.js 15 App Router, fully static** (`output: 'export'`). Nothing runs at request time — all pages are pre-rendered at build time or handled client-side.
+**Next.js App Router, fully static** (`output: 'export'`). Nothing runs at request time — all pages are pre-rendered at build time or handled client-side.
 
 ### Key constraints
 
 - No `next/headers`, no route handlers, no server actions
 - `Image` component uses `unoptimized: true` (required for static export)
 - `trailingSlash: true` is set in `next.config.mjs`
-- `params` in page components is a `Promise` in Next.js 15 — always `await params`
+- `params` in page components is a `Promise` — always `await params`
 - `src/lib/blogs.ts` uses Node.js `fs` — **Server Components only**, never import in Client Components
 
 ### Data flow
@@ -115,10 +117,11 @@ If you rename or remove a CSS class, check `tests/e2e/` for selectors that refer
 
 ### Styling
 
-- Single global CSS file: `src/app/globals.css`
-- IBM Plex Sans + IBM Plex Mono (Google Fonts)
-- Dark/light theme via CSS custom properties + `@media (prefers-color-scheme: light)`
-- No CSS modules, no Tailwind
+- Global stylesheets in `public/css/`: `styles.css` (site) + `code-theme.css` (syntax highlighting), linked from `layout.tsx`
+- Self-hosted **Aileron** (sans) + **JetBrains Mono** via `public/assets/fonts.css`
+- Light theme via CSS custom properties on `:root`
+- Landing-page interactions (cursor, hero, compare slider, code panel) are vanilla ES modules in `public/js/`
+- Plain CSS only — no CSS modules, no Tailwind
 
 ### Deployment
 
@@ -172,7 +175,7 @@ Verify with `npm run build` — no config changes or code edits needed.
 
 | Problem | Fix |
 | --- | --- |
-| `params` type error in page component | `params` is `Promise<{slug: string}>` in Next.js 15 — use `await params` |
+| `params` type error in page component | `params` is `Promise<{slug: string}>` — use `await params` |
 | E2E test strict mode violation | Scope selector (e.g. `page.getByRole('banner').getByRole('link', ...)`) |
 | `fs` import error in client bundle | Move the import to a Server Component; never import `src/lib/blogs.ts` client-side |
 | ESLint config error | Uses ESLint 9 flat config (`eslint.config.mjs`) — no legacy `.eslintrc` |
