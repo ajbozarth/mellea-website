@@ -795,15 +795,23 @@ button {
   );
 }
 
-.how-mellea__inner {
+/* Shared homepage section container: centered, page-width-capped column */
+.how-mellea__inner,
+.future-software__inner,
+.granite__inner,
+.blog-section__inner,
+.site-footer__inner {
   display: flex;
   flex-direction: column;
-  gap: 7.5rem;
   width: 100%;
   max-width: var(--homepage-max-width);
   margin: 0 auto;
   padding-left: var(--page-gutter-inset);
   padding-right: var(--page-gutter-inset);
+}
+
+.how-mellea__inner {
+  gap: 7.5rem;
 }
 
 /* Interactive with/without Mellea comparison */
@@ -1124,14 +1132,7 @@ button {
 }
 
 .future-software__inner {
-  display: flex;
-  flex-direction: column;
   gap: 2rem;
-  width: 100%;
-  max-width: var(--homepage-max-width);
-  margin: 0 auto;
-  padding-left: var(--page-gutter-inset);
-  padding-right: var(--page-gutter-inset);
 }
 
 .future-software__title {
@@ -1338,14 +1339,7 @@ button {
 }
 
 .granite__inner {
-  display: flex;
-  flex-direction: column;
   gap: 2.5rem;
-  width: 100%;
-  max-width: var(--homepage-max-width);
-  margin: 0 auto;
-  padding-left: var(--page-gutter-inset);
-  padding-right: var(--page-gutter-inset);
 }
 
 .granite__intro {
@@ -1428,14 +1422,7 @@ button {
 }
 
 .blog-section__inner {
-  display: flex;
-  flex-direction: column;
   gap: 3rem;
-  width: 100%;
-  max-width: var(--homepage-max-width);
-  margin: 0 auto;
-  padding-left: var(--page-gutter-inset);
-  padding-right: var(--page-gutter-inset);
 }
 
 .blog-section__header {
@@ -1590,16 +1577,6 @@ button {
   top: 0;
   bottom: 0;
   background: #fff;
-}
-
-.site-footer__inner {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: var(--homepage-max-width);
-  margin: 0 auto;
-  padding-left: var(--page-gutter-inset);
-  padding-right: var(--page-gutter-inset);
 }
 
 .site-footer__cta {
