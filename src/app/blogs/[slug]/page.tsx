@@ -10,7 +10,7 @@ import { getBlog, getAllBlogSlugs } from '@/lib/blogs';
 import { siteConfig } from '@/config/site';
 import { formatBlogDate } from '@/lib/formatDate';
 import { assetUrl } from '@/lib/assetUrl';
-import PageShell from '@/components/redesign/PageShell';
+import PageShell from '@/components/PageShell';
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;

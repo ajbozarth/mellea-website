@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { getAllBlogs } from '@/lib/blogs';
-import PageShell from '@/components/redesign/PageShell';
-import BlogCard from '@/components/redesign/BlogCard';
+import PageShell from '@/components/PageShell';
+import BlogCard from '@/components/BlogCard';
 
 export const metadata: Metadata = {
   title: 'Blog',

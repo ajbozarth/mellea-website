@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import PageShell from '@/components/redesign/PageShell';
+import PageShell from '@/components/PageShell';
 
 export default function NotFound() {
   return (

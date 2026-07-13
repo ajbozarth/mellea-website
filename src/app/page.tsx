@@ -1,15 +1,15 @@
 import type { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
 import { getAllBlogs } from '@/lib/blogs';
-import SiteHeader from '@/components/redesign/SiteHeader';
-import HeroSection from '@/components/redesign/HeroSection';
-import HowMelleaSection from '@/components/redesign/HowMelleaSection';
-import FutureSoftwareSection from '@/components/redesign/FutureSoftwareSection';
-import GraniteSection from '@/components/redesign/GraniteSection';
-import BlogSection from '@/components/redesign/BlogSection';
-import SiteFooter from '@/components/redesign/SiteFooter';
-import CursorToggle from '@/components/redesign/CursorToggle';
-import LandingScripts from '@/components/redesign/LandingScripts';
+import SiteHeader from '@/components/SiteHeader';
+import HeroSection from '@/components/HeroSection';
+import HowMelleaSection from '@/components/HowMelleaSection';
+import FutureSoftwareSection from '@/components/FutureSoftwareSection';
+import GraniteSection from '@/components/GraniteSection';
+import BlogSection from '@/components/BlogSection';
+import SiteFooter from '@/components/SiteFooter';
+import CursorToggle from '@/components/CursorToggle';
+import LandingScripts from '@/components/LandingScripts';
 
 export const metadata: Metadata = {
   title: 'Mellea - Control LLMs with code',
