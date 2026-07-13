@@ -305,6 +305,12 @@ export function createCursorSprite(config) {
   const triggers = createTriggerManager(config, registry);
   const motion = createMotionEngine(container, config.motion);
 
+  // Only wire up scroll/resize listeners if the config actually defines a
+  // scroll trigger — otherwise onScroll would run on every scroll for nothing.
+  const hasScrollTriggers = (config.triggers ?? []).some(
+    (trigger) => trigger.type === "scroll"
+  );
+
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   let started = false;
   let listenersBound = false;
@@ -436,18 +442,20 @@ export function createCursorSprite(config) {
       .then(() => {
         if (!started || reducedMotion.matches) return;
         triggers.init();
-        onScroll();
+        if (hasScrollTriggers) onScroll();
         syncMotion();
       })
       .catch(() => {
         if (!started || reducedMotion.matches) return;
         triggers.init();
-        onScroll();
+        if (hasScrollTriggers) onScroll();
         syncMotion();
       });
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    if (hasScrollTriggers) {
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll, { passive: true });
+    }
 
     started = true;
   }
@@ -457,8 +465,10 @@ export function createCursorSprite(config) {
 
     motion.stop();
     motionRunning = false;
-    window.removeEventListener("scroll", onScroll);
-    window.removeEventListener("resize", onScroll);
+    if (hasScrollTriggers) {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    }
     started = false;
   }
 

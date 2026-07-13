@@ -1,5 +1,5 @@
 /**
- * Interactive before/after slider for the How Mellea section (Figma 2023:1868).
+ * Interactive before/after slider for the How Mellea section.
  */
 
 const DEFAULT_SPLIT = 0.44;

@@ -1,5 +1,6 @@
 /**
- * Fixed Mel cursor-follower toggle (Figma 1496:571 / 1496:572).
+ * Custom cursor-follower toggle: persists the on/off preference to
+ * localStorage and wires up the toggle button (state, ARIA, label).
  */
 const STORAGE_KEY = "mellea-cursor-follower";
 

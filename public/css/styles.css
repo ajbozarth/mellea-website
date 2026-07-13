@@ -1,4 +1,4 @@
-/* Design tokens — Mellea landing (Figma 1160:18950) */
+/* Design tokens — Mellea landing */
 :root {
   /* Brand colors */
   --mellea-honey: #fdb602;
@@ -144,7 +144,7 @@ button {
   height: var(--trail-sprite-height);
 }
 
-/* Cursor follower toggle (Figma 1496:571 / 1496:572) — scaled to 48px total height */
+/* Cursor follower toggle — scaled to 48px total height */
 .cursor-toggle {
   --mel-toggle-scale: 0.75;
   position: fixed;
@@ -772,7 +772,7 @@ button {
   overflow: visible;
 }
 
-/* How Mellea works (Figma 1443:889) */
+/* How Mellea works */
 .how-mellea {
   z-index: 2;
   width: 100%;
@@ -803,7 +803,7 @@ button {
   padding-right: var(--page-gutter-inset);
 }
 
-/* Interactive with/without Mellea comparison (Figma 2023:1868) */
+/* Interactive with/without Mellea comparison */
 .how-mellea__compare {
   --compare-split: 0.44;
   --compare-code-width: 866px;
@@ -1107,7 +1107,7 @@ button {
   color: var(--text-primary);
 }
 
-/* Here's the future of software (Figma 1530:680 / 1526:631 / 1530:701) */
+/* Here's the future of software */
 .future-software {
   width: 100%;
   margin: 0;
@@ -1321,7 +1321,7 @@ button {
   font: inherit;
 }
 
-/* Granite — Mellea + Granite (Figma 1442:787) */
+/* Granite — Mellea + Granite */
 .granite {
   width: 100%;
   margin: 0;
@@ -1411,7 +1411,7 @@ button {
   border-color: var(--gray-border);
 }
 
-/* From the blog (Figma 1552:487) */
+/* From the blog */
 .blog-section {
   width: 100%;
   margin: 0;
@@ -1568,7 +1568,7 @@ button {
   color: #805c00;
 }
 
-/* Site footer (Figma 1552:546) */
+/* Site footer */
 .site-footer {
   width: 100%;
   margin: 0;

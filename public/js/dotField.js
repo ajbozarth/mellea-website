@@ -5,8 +5,8 @@ const DEFAULT_OPTIONS = {
   dotRadius: 1.5,
   dotSpacing: 17,
   cursorRadius: 850,
-  cursorForce: 0.66,
-  bulgeOnly: true,
+  cursorForce: 0.66, // push strength for velocity-repulsion mode (bulgeOnly:false)
+  bulgeOnly: true, // physics mode: spring bulge (default, lighter on CPU) or velocity repulsion
   bulgeStrength: 137,
   glowRadius: 60,
   showGlow: true,
