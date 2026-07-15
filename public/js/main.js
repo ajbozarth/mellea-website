@@ -18,6 +18,10 @@ const resolvedConfig = {
   })),
 };
 
+// The follower tracks a hovering cursor, so it's skipped on touchscreens.
+// Same query as the styles.css @media block that hides its elements.
+const isTouchDevice = window.matchMedia("(hover: none), (pointer: coarse)");
+
 // Loaded once; LandingScripts fires mellea:landing-mount/-unmount so we can
 // rebuild effects and tear down global listeners across client-side navigation.
 let active = null;
@@ -73,14 +77,17 @@ function setup() {
   initSectionReveal();
   initHeroActions();
   const dotField = initHeroDotField();
-  initCursorToggle({ onChange: applyCursorFollowerEnabled });
   initFutureSoftwarePanel();
   initMelleaCompare();
 
-  cursor.start();
-  trail.start();
-  cursor.setVisible(false);
-  trail.syncVisibility(false);
+  // On touch devices the toggle isn't wired up and the loops never start.
+  if (!isTouchDevice.matches) {
+    initCursorToggle({ onChange: applyCursorFollowerEnabled });
+    cursor.start();
+    trail.start();
+    cursor.setVisible(false);
+    trail.syncVisibility(false);
+  }
 
   active = { cursor, trail, dotField };
 }

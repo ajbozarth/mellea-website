@@ -31,6 +31,28 @@ export default function SiteHeader() {
     };
   }, []);
 
+  // Lock body scroll while the mobile menu is open so the page can't slide
+  // behind the (transparent) header. Paired with body.mobile-menu-open in CSS.
+  useEffect(() => {
+    document.body.classList.toggle('mobile-menu-open', menuOpen);
+    return () => {
+      document.body.classList.remove('mobile-menu-open');
+    };
+  }, [menuOpen]);
+
+  // Close the menu if the viewport grows past the mobile breakpoint (e.g. device
+  // rotation): the hamburger is gone above 767px, so a lingering-open overlay
+  // would double up the nav/CTA against the restored desktop header.
+  useEffect(() => {
+    const mobileNavBreakpoint = window.matchMedia('(min-width: 768px)');
+    const closeAboveBreakpoint = () => {
+      if (mobileNavBreakpoint.matches) setMenuOpen(false);
+    };
+    mobileNavBreakpoint.addEventListener('change', closeAboveBreakpoint);
+    return () =>
+      mobileNavBreakpoint.removeEventListener('change', closeAboveBreakpoint);
+  }, []);
+
   const closeMenu = () => setMenuOpen(false);
 
   const navLinks = (
