@@ -168,11 +168,11 @@ export default function SiteHeader() {
             href={siteConfig.docsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-nav-get-started mobile-nav__cta"
+            className="site-nav__link mobile-nav__cta"
             onClick={closeMenu}
           >
             <span>Get started</span>
-            <img src={assetUrl('/assets/icon-arrow-up-right.svg')} alt="" width={20} height={20} />
+            <span className="btn__icon-mask btn__icon-mask--arrow-up-right" aria-hidden="true" />
           </Link>
         </nav>,
         document.body,

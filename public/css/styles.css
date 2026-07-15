@@ -1870,7 +1870,12 @@ body.mobile-menu-open {
 
 .mobile-nav__cta {
   display: inline-flex;
-  margin-top: 0.5rem;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobile-nav__cta .btn__icon-mask {
+  background-color: currentColor;
 }
 
 @media (max-width: 767px) {
@@ -1882,7 +1887,7 @@ body.mobile-menu-open {
     display: none !important;
   }
 
-  .btn-nav-get-started:not(.mobile-nav__cta) {
+  .btn-nav-get-started {
     display: none !important;
   }
 }
