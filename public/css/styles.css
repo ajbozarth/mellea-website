@@ -1869,6 +1869,7 @@ body.mobile-menu-open {
 }
 
 .mobile-nav__cta {
+  display: inline-flex;
   margin-top: 0.5rem;
 }
 
@@ -1881,7 +1882,7 @@ body.mobile-menu-open {
     display: none !important;
   }
 
-  .btn-nav-get-started {
+  .btn-nav-get-started:not(.mobile-nav__cta) {
     display: none !important;
   }
 }
