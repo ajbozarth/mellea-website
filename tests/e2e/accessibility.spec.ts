@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { retryUntilTabSelected } from './helpers';
 
 // ── Landmark Roles ──
 
@@ -40,12 +41,12 @@ test('all images have alt text', async ({ page }) => {
 test('future panel tabs are keyboard navigable', async ({ page }) => {
   await page.goto('/');
   const firstTab = page.getByRole('tab').first();
-  await firstTab.click();
-  await expect(firstTab).toHaveAttribute('aria-selected', 'true');
 
-  await firstTab.press('ArrowDown');
-  const secondTab = page.getByRole('tab').nth(1);
-  await expect(secondTab).toHaveAttribute('aria-selected', 'true');
+  // The keydown handler is wired by an afterInteractive script, so both the
+  // initial focus-click and the ArrowDown may land before it binds. Retry each
+  // until the intended tab reports selected.
+  await retryUntilTabSelected(page, () => firstTab.click(), 0);
+  await retryUntilTabSelected(page, () => firstTab.press('ArrowDown'), 1);
 });
 
 // ── External Links ──

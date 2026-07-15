@@ -3,9 +3,9 @@ import { test, expect } from '@playwright/test';
 // ── 404 Page ──
 
 test('404 page renders for unknown routes', async ({ page }) => {
-  const response = await page.goto('/this-page-does-not-exist/');
-  // Static export serves 404.html but HTTP status depends on server config
-  // Just verify the 404 content renders
+  // Static export serves 404.html but the HTTP status depends on server config,
+  // so we don't assert on it — just verify the 404 content renders.
+  await page.goto('/this-page-does-not-exist/');
   await expect(page.getByRole('heading', { name: '404' })).toBeVisible();
   await expect(page.getByText(/doesn.t exist/i)).toBeVisible();
 });

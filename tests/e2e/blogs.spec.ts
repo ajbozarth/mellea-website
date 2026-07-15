@@ -51,18 +51,17 @@ test('blog post has heading, metadata, and prose content', async ({ page }) => {
   await expect(article.locator('.prose')).not.toBeEmpty();
 });
 
-test('blog post tags render correctly when present', async ({ page }) => {
+test('blog post tags render correctly', async ({ page }) => {
   await page.goto('/blogs/');
   const firstCard = page.getByRole('main').locator('a[href^="/blogs/"]:not([href="/blogs/"])').first();
   const href = await firstCard.getAttribute('href');
   await page.goto(href!);
 
-  const tagsList = page.getByLabel('Tags');
-  if (await tagsList.count() > 0) {
-    const tags = tagsList.locator('li');
-    await expect(tags.first()).toBeVisible();
-    await expect(tags.first()).not.toBeEmpty();
-  }
+  // All posts carry tags by convention, so assert the list renders rather than
+  // guarding on its presence.
+  const tags = page.getByLabel('Tags').locator('li');
+  await expect(tags.first()).toBeVisible();
+  await expect(tags.first()).not.toBeEmpty();
 });
 
 test('blog post has discussion link', async ({ page }) => {
