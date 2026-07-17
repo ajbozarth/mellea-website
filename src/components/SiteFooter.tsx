@@ -54,8 +54,7 @@ export default function SiteFooter({ showCta = false }: SiteFooterProps) {
 
         <div className="site-footer__legal">
           <p className="site-footer__copyright">
-            &copy; {year} Mellea &middot; Documentation distributed under CC by 4.0 &middot; IBM 💙
-            Open Source AI
+            &copy; {year}{" "}Mellea &middot; Documentation distributed under CC by 4.0 &middot; IBM 💙 Open Source AI
           </p>
           <nav className="site-footer__links" aria-label="Legal and resources">
             <Link className="site-footer__link" href={siteConfig.licenseUrl} target="_blank" rel="noopener noreferrer">
