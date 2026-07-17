@@ -65,6 +65,7 @@ export default function RootLayout({
         <link rel="stylesheet" href={assetUrl('/css/code-theme.css')} />
       </head>
       <body>
+        <a href="#main-content" className="skip-link">Skip to content</a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

@@ -28,7 +28,6 @@ function setActivePanel(root, panelId) {
   codes.forEach((code) => {
     const isActive = code.id === `future-code-${panelId}`;
     code.classList.toggle("is-active", isActive);
-    code.hidden = !isActive;
   });
 
   const copyBtn = root.querySelector("[data-future-copy]");
@@ -107,6 +106,10 @@ export function initFutureSoftwarePanel() {
   });
 
   tablist.addEventListener("keydown", (event) => {
+    // Let the "Learn more" link handle its own keys (Enter navigates) rather
+    // than swallowing them to re-activate the tab.
+    if (event.target.closest(".future-panel__learn-more")) return;
+
     const tabs = [...root.querySelectorAll(".future-panel__tab")];
 
     // Enter/Space activate the focused tab. A <div role="tab"> — unlike a

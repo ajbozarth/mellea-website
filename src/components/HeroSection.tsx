@@ -4,7 +4,7 @@ import { assetUrl } from '@/lib/assetUrl';
 
 export default function HeroSection() {
   return (
-    <main className="hero">
+    <main id="main-content" className="hero">
       <div className="hero__dot-field" id="hero-dot-field" aria-hidden="true" />
       <div className="hero__content">
         <h1 className="hero__title" aria-label="Control LLMs with code, not prompts">

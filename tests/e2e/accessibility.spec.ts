@@ -10,6 +10,14 @@ test('page has banner, main, and contentinfo landmarks', async ({ page }) => {
   await expect(page.getByRole('contentinfo')).toBeVisible();
 });
 
+test('skip-to-content link exists and targets main content', async ({ page }) => {
+  await page.goto('/');
+  const skip = page.locator('[href="#main-content"]');
+  await expect(skip).toHaveCount(1);
+  // The target landmark must exist on the home page, not just inner pages.
+  await expect(page.locator('#main-content')).toHaveCount(1);
+});
+
 // ── Heading Hierarchy ──
 
 test('homepage has exactly one h1', async ({ page }) => {
@@ -58,6 +66,36 @@ test('future panel tabs activate on Enter and Space', async ({ page }) => {
   // Locator.press() focuses the tab before pressing.
   await retryUntilTabSelected(page, () => tabs.nth(2).press('Enter'), 2);
   await retryUntilTabSelected(page, () => tabs.nth(1).press(' '), 1);
+});
+
+test('Enter on the tab "Learn more" link navigates instead of switching tabs', async ({ page }) => {
+  await page.goto('/');
+  const link = page.locator('.future-panel__tab.is-active .future-panel__learn-more');
+  const href = await link.getAttribute('href');
+  expect(href).toBeTruthy();
+
+  // The tablist keydown handler must ignore keys from the link; otherwise it
+  // calls preventDefault() and swallows the navigation. Retry to absorb the
+  // afterInteractive handler-binding race.
+  await expect(async () => {
+    const popupPromise = page.context().waitForEvent('page', { timeout: 1000 });
+    await link.press('Enter');
+    const popup = await popupPromise;
+    expect(popup.url()).toBe(href);
+  }).toPass();
+});
+
+test('keyboard-focusable controls use a themed focus ring, not the browser default', async ({ page }) => {
+  await page.goto('/');
+  // --text-primary (#161616) is the site's focus-ring color; the browser
+  // default is blue. A few representative controls across the added rules:
+  // skip link + nav (a/button rule) and a panel tab ([role=tab] rule).
+  const selectors = ['a.skip-link', 'a.site-nav__link', '.future-panel__tab'];
+  for (const sel of selectors) {
+    const el = page.locator(sel).first();
+    await el.focus();
+    await expect(el).toHaveCSS('outline-color', 'rgb(22, 22, 22)');
+  }
 });
 
 // ── External Links ──

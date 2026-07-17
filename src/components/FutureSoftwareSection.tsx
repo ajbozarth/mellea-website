@@ -153,8 +153,6 @@ export default function FutureSoftwareSection() {
                   className={`future-panel__code${index === 0 ? ' is-active' : ''}`}
                   role="tabpanel"
                   aria-labelledby={`future-tab-${tab.id}`}
-                  tabIndex={0}
-                  hidden={index !== 0}
                 >
                   <code
                     className="hljs language-python"

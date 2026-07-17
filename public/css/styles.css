@@ -71,6 +71,31 @@
   box-sizing: border-box;
 }
 
+/* Consistent keyboard-focus ring for links and buttons site-wide. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: 2px;
+}
+
+/* ── Skip link (a11y) ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.5rem 1rem;
+  background: var(--mellea-honey-light);
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 0 0 4px 4px;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 36px);
@@ -966,9 +991,15 @@ button {
   transition: box-shadow 150ms ease;
 }
 
-.how-mellea__compare-handle:focus,
+.how-mellea__compare-handle:focus {
+  outline: none;
+}
+
+/* Round control: use a shape-following ring instead of a square outline,
+   and only for keyboard focus so it doesn't show while dragging. */
 .how-mellea__compare-handle:focus-visible {
   outline: none;
+  box-shadow: 0 0 0 3px var(--page-bg), 0 0 0 5px var(--text-primary);
 }
 
 .how-mellea__compare-handle-icon {
@@ -1149,7 +1180,6 @@ button {
   display: grid;
   grid-template-columns: minmax(0, 36.9%) minmax(0, 1fr);
   width: 100%;
-  min-height: 48.3125rem;
   border: 1px solid var(--gray-border);
   background: var(--surface);
 }
@@ -1180,6 +1210,10 @@ button {
     min-height 0.25s ease;
 }
 
+.future-panel__tab:focus-visible {
+  outline: 2px solid var(--text-primary);
+  outline-offset: -4px;
+}
 
 .future-panel__tab.is-active {
   min-height: 10.625rem;
@@ -1301,10 +1335,15 @@ button {
   flex: 1;
   min-height: 0;
   overflow: auto;
+  /* Stack all panels in one cell so the viewport sizes to the tallest snippet
+     (dynamic — no hard-coded height). Inactive panels are hidden but still
+     occupy the cell, keeping the panel height stable across tab switches. */
+  display: grid;
 }
 
 .future-panel__code {
-  display: none;
+  grid-area: 1 / 1;
+  visibility: hidden;
   margin: 0;
   padding: 1rem 1rem 1rem 3rem;
   font-family: var(--font-mono);
@@ -1318,7 +1357,7 @@ button {
 }
 
 .future-panel__code.is-active {
-  display: block;
+  visibility: visible;
 }
 
 .future-panel__code code {
