@@ -49,6 +49,17 @@ test('future panel tabs are keyboard navigable', async ({ page }) => {
   await retryUntilTabSelected(page, () => firstTab.press('ArrowDown'), 1);
 });
 
+test('future panel tabs activate on Enter and Space', async ({ page }) => {
+  await page.goto('/');
+  const tabs = page.getByRole('tab');
+
+  // A <div role="tab"> does not synthesize a click on Enter/Space the way a
+  // <button> would, so the keydown handler must activate the focused tab.
+  // Locator.press() focuses the tab before pressing.
+  await retryUntilTabSelected(page, () => tabs.nth(2).press('Enter'), 2);
+  await retryUntilTabSelected(page, () => tabs.nth(1).press(' '), 1);
+});
+
 // ── External Links ──
 
 test('external links in header/footer have rel="noopener"', async ({ page }) => {
@@ -72,4 +83,12 @@ test('future panel uses proper ARIA roles', async ({ page }) => {
   await expect(page.locator('[role="tabpanel"]')).toHaveCount(3);
   await expect(page.locator('[role="tab"][aria-selected="true"]')).toHaveCount(1);
   await expect(page.locator('.future-panel__code.is-active')).toHaveCount(1);
+});
+
+test('future panel has no nested interactive controls', async ({ page }) => {
+  await page.goto('/');
+  // A <button> may not contain interactive descendants (invalid HTML, ambiguous
+  // for keyboard/screen-reader users). Each tab is a <div role="tab"> so the
+  // "Learn more" anchor can live inside it legally.
+  await expect(page.locator('button:has(a)')).toHaveCount(0);
 });

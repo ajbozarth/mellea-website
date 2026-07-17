@@ -107,9 +107,24 @@ export function initFutureSoftwarePanel() {
   });
 
   tablist.addEventListener("keydown", (event) => {
+    const tabs = [...root.querySelectorAll(".future-panel__tab")];
+
+    // Enter/Space activate the focused tab. A <div role="tab"> — unlike a
+    // <button> — does not synthesize a click on these keys, so wire it here.
+    if (event.key === "Enter" || event.key === " ") {
+      const focusedTab = /** @type {HTMLElement | null} */ (
+        event.target.closest(".future-panel__tab")
+      );
+      if (!focusedTab || !tablist.contains(focusedTab)) return;
+      const panelId = focusedTab.dataset.panel;
+      if (!panelId) return;
+      event.preventDefault();
+      setActivePanel(root, panelId);
+      return;
+    }
+
     if (!["ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) return;
 
-    const tabs = [...root.querySelectorAll(".future-panel__tab")];
     const currentIndex = tabs.findIndex((tab) =>
       tab.classList.contains("is-active")
     );

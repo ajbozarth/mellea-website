@@ -104,9 +104,8 @@ export default function FutureSoftwareSection() {
         <div className="future-panel" data-future-panel>
           <div className="future-panel__nav" role="tablist" aria-label="Code examples">
             {TABS.map((tab, index) => (
-              <button
+              <div
                 key={tab.id}
-                type="button"
                 className={`future-panel__tab${index === 0 ? ' is-active' : ''}`}
                 role="tab"
                 id={`future-tab-${tab.id}`}
@@ -128,7 +127,7 @@ export default function FutureSoftwareSection() {
                     <span className="btn__icon-mask btn__icon-mask--arrow-up-right" aria-hidden="true" />
                   </Link>
                 </span>
-              </button>
+              </div>
             ))}
           </div>
 
