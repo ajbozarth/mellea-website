@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 import { siteConfig } from '@/config/site';
 import { assetUrl } from '@/lib/assetUrl';
 
@@ -70,6 +71,8 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        {/* IBM Analytics — self-hosted script, guards against localhost internally. See public/analytics.js */}
+        <Script src={assetUrl('/analytics.js')} strategy="afterInteractive" />
         {children}
       </body>
     </html>

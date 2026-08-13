@@ -386,11 +386,11 @@ button {
   flex-shrink: 0;
 }
 
-.site-header.is-follower-active .brand {
+.is-follower-active .site-header .brand {
   gap: 0;
 }
 
-.site-header.is-follower-active .brand__icon {
+.is-follower-active .site-header .brand__icon {
   opacity: 0;
   width: 0;
   max-width: 0;

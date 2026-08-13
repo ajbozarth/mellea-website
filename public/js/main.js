@@ -36,15 +36,12 @@ function setup() {
     getFollowTarget: () => cursor.getAnchorPosition(),
     onSectionChange: () => syncCursorFollowerVisibility(),
   });
-  const siteHeader = document.getElementById("site-header");
   const brandIcon = document.querySelector(".brand__icon");
 
   let cursorFollowerEnabled = false;
 
   function syncBrandIconForFollower(isActive) {
-    if (siteHeader) {
-      siteHeader.classList.toggle("is-follower-active", isActive);
-    }
+    document.body.classList.toggle("is-follower-active", isActive);
 
     if (brandIcon) {
       brandIcon.setAttribute("aria-hidden", isActive ? "true" : "false");
@@ -60,7 +57,6 @@ function setup() {
 
   function applyCursorFollowerEnabled(enabled) {
     cursorFollowerEnabled = enabled;
-    document.body.classList.toggle("cursor-follower-off", !enabled);
     trail.setEnabled(enabled);
 
     if (!enabled) {
